@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Ontology of rabbis endpoint</title>
+  <!--link href='http://cdn.jsdelivr.net/g/yasqe@2.2(yasqe.min.css),yasr@2.4(yasr.min.css)' rel='stylesheet' type='text/css'/-->
+  <link rel="stylesheet" type="text/css" href="yasqe/yasqe.min.css"/>
+  <link rel="stylesheet" type="text/css" href="yasr/yasr.min.css"/>
+  <link rel="stylesheet" type="text/css" href="css/psc.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="js/jquery-3.4.1.js"></script>
+  <script src="js/jquery.dataTables.min.js"></script>
+</head>
+
+<body>
+ <div style="padding-top:15px; padding-bottom:20px">
+  <center><h2>Simple SPARQL interface</h2></center>
+  </div>
+  <table class="queryTable">
+    <tr>
+      <th align="left">Select an example of query</th>
+      <th>Create your own SPARQL query</th>
+    </tr>
+    <tr>
+      <td align="left">
+	<div class="vertical-menu">
+	  <a href="javascript:void(0)" class="item" id="q1">Show me the ontology of rabbis metadata</a>
+	  <a href="javascript:void(0)" class="item" id="q2">Show me all the rabbis of the ontology</a>
+	  <a href="javascript:void(0)" class="item" id="q3">Show me the Babylonian Amoraim of the third generation</a>
+	  <a href="javascript:void(0)" class="item" id="q4">Show me the rabbis who lived across two generations</a>
+	  <a href="javascript:void(0)" class="item" id="q5">Show me the rabbis having more than one name</a>
+	  <a href="javascript:void(0)" class="item" id="q6">Show me the ten most frequently appearing rabbis</a>
+	  <a href="javascript:void(0)" class="item" id="q7">Show me the terms co-occuring with first generation Tannahim</a>
+	  <a href="javascript:void(0)" class="item" id="q8">Show me the rabbis co-occuring with term "aceto" in Berakhot</a>
+    <a href="javascript:void(0)" class="item" id="q9">
+      Show me all the forms that 
+      <select id="q9_searchMode" onchange="q9_update()">
+        <option value="^">start</option>
+        <option value="">contain</option>
+        <option value="$">end</option>
+      </select>
+      with 
+      <input id="q9_input" type="text" onInput="q9_update()" value=""/>
+    </a>
+	</div> 
+      </td>
+      <td>
+	<div id="yasqe"></div>
+      </td>
+    </tr>
+  </table>
+
+    <div id="yasr" class="yasrStyle" style="padding-top:10px;"></div>
+    <!--script src='http://cdn.jsdelivr.net/yasr/2.4/yasr.bundled.min.js'></script>
+    <script src='http://cdn.jsdelivr.net/yasqe/2.2/yasqe.bundled.min.js'></script-->
+    <!--script src='https://cdnjs.cloudflare.com/ajax/libs/yasqe/2.11.22/yasqe.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/yasr/2.12.19/yasr.js'></script-->
+    
+
+    <script src="yasr/yasr.bundled.js"></script>
+    <script src="yasqe/yasqe.bundled.js"></script>
+    <script src="js/glue.js"></script>
+</body>

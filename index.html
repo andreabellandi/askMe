@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simple Italian Lexicon</title>
+  <link rel="stylesheet" type="text/css" href="yasqe/yasqe.min.css"/>
+  <link rel="stylesheet" type="text/css" href="yasr/yasr.min.css"/>
+  <link rel="stylesheet" type="text/css" href="css/psc.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<div class="sidenav">
+  <a href="#">Home</a>
+  <a href="#">Interface</a>
+  <a href="#">Statistics</a>
+  <a href="#">Reference</a>
+  <a href="#">Contact</a>
+</div>
+
+<div class="main">
+
+    <div style="padding-top:15px; padding-bottom:20px">
+        <center><h2>Simple SPARQL interface</h2></center>
+        </div>
+        <table class="queryTable">
+          <tr>
+            <th align="left">Select an example of query</th>
+            <th>Create your own SPARQL query</th>
+          </tr>
+          <tr>
+            <td align="left">
+          <div class="vertical-menu">
+          <a href="javascript:void(0)" class="item" id="q1">
+            Show me all the forms that 
+            <select id="q1_searchMode" onchange="q1_update()">
+              <option value="^">start</option>
+              <option value="">contain</option>
+              <option value="$">end</option>
+            </select>
+            with 
+            <input id="q1_input" type="text" onInput="q1_update()" value=""/>
+          </a>
+          <a href="javascript:void(0)" class="item" id="q2">
+            Show me all the forms with 
+            <select id="q2_pos" onchange="q2_update()">
+                <option value="noun">noun</option>
+                <option value="adjective">adjective</option>
+                <option value="verb">verb</option>
+                <option value="adverb">adverb</option>
+                <option value="preposition">preposition</option>
+                <option value="properNoun">properNoun</option>
+              </select>
+            as part of speech  
+          </a>
+          <a href="javascript:void(0)" class="item" id="q3">
+            Show me all the  
+            <select id="q3_semrel" onchange="q3_update()">
+                <option value="hyponym">hyponyms</option>
+              </select>
+            of <input id="q3_input" type="text" onInput="q3_update()" value=""/>
+          </a>
+          <a href="javascript:void(0)" class="item" id="q4">
+            Show me all the senses of the form <input id="q4_input" type="text" onInput="q4_update()" value=""/>
+          </a>
+          </div> 
+            </td>
+            <td>
+          <div id="yasqe"></div>
+            </td>
+          </tr>
+        </table>
+      
+          <div id="yasr" class="yasrStyle" style="padding-top:10px;"></div>          
+      
+          <script src="yasr/yasr.bundled.js"></script>
+          <script src="yasqe/yasqe.bundled.js"></script>
+          <script src="js/glue.js"></script>
+
+
+</div>
+
+
+   
+</body>
+</html> 
