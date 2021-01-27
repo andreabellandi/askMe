@@ -2,11 +2,14 @@
 var yasqe = YASQE(document.getElementById("yasqe"), {
     sparql: {
 	showQueryButton: true,
-	endpoint: "http://localhost:7200/repositories/SIMPLE",
+	endpoint: "https://licodemo.ilc.cnr.it/repositories/askMe",
 	headers: {
 	    "Access-Control-Allow-Origin":"*"
 	}
-    }
+    },
+    lineWrapping: true,
+    collapsePrefixesOnLoad: true,
+    backdrop: true
 });
 yasqe.addPrefixes({"rdf":"http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rabbi":"http://lexo-datasets.ilc.cnr.it:3030/rabbiOntology#",
@@ -22,15 +25,21 @@ yasqe.addPrefixes({"rdf":"http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "luc": "http://www.ontotext.com/owlim/lucene#"
     });
 
-yasqe.setSize("auto", "330px");
+yasqe.setSize("auto", "250px");
+yasqe.collapsePrefixes("true");
+yasqe.options.collapsePrefixesOnLoad = true;
 
-YASR.plugins.table.defaults.datatable.scrollY = "300px";
-YASR.plugins.table.defaults.datatable.scrollCollapse = true;
-YASR.plugins.table.defaults.datatable.paging     = false;
-YASR.plugins.table.defaults.datatable.searching  = false;
-YASR.plugins.table.defaults.datatable.autoWidth  = true;
-YASR.plugins.table.defaults.datatable.processing = true;
-YASR.plugins.table.defaults.datatable.deferRender = true;
+YASR.plugins.table.defaults.datatable.scrollY        = 500;
+YASR.plugins.table.defaults.datatable.scrollCollapse = false;
+YASR.plugins.table.defaults.datatable.paging         = true;
+YASR.plugins.table.defaults.datatable.lengthMenu     = [[10,50,100,1000,-1], [10,50,100,1000,"All"]];
+YASR.plugins.table.defaults.datatable.pageLength     = 10;
+YASR.plugins.table.defaults.datatable.searching      = true;
+YASR.plugins.table.defaults.datatable.autoWidth      = true;
+YASR.plugins.table.defaults.datatable.processing     = true;
+YASR.plugins.table.defaults.datatable.deferRender    = true;
+//overload della drawCallback per risolvere i problemi di visualizzazione causati dalla funzione empty()
+YASR.plugins.table.defaults.datatable.drawCallback = null;
 
 var yasr = YASR(document.getElementById("yasr"), {
     //this way, the URLs in the results are prettified using the defined prefixes in the query
@@ -39,8 +48,10 @@ var yasr = YASR(document.getElementById("yasr"), {
     drawDownloadIcon: false
 });
 document.getElementsByClassName("yasr_header")[0].style.display = "none"; //https://github.com/OpenTriply/YASGUI.YASR/issues/119
+
 //link both together
 yasqe.options.sparql.callbacks.complete = yasr.setResponse;
+
 
 var map = {};
 // add a item
@@ -51,7 +62,7 @@ map["q1"] = "PREFIX ontolex: <http://www.w3.org/ns/lemon/ontolex#>\n" +
 "   ?IRI ontolex:lexicalForm ?lf ;\n" +
 "       lexinfo:partOfSpeech ?PoS .\n" +
 "   FILTER(REGEX(?form, '_VALUE_'))\n" +
-"}\n";
+"}\nLIMIT 1000";
 
 map["q2"] = "PREFIX ontolex: <http://www.w3.org/ns/lemon/ontolex#>\n" +
 "SELECT ?lf ?wr WHERE { \n" +
@@ -137,12 +148,13 @@ function clickFunction() {
 			   "rdfs":"http://www.w3.org/2000/01/rdf-schema#",
 			   "foaf":"http://xmlns.com/foaf/0.1/",
 			   "xsd": "http://www.w3.org/2001/XMLSchema#",
-               "lex": "http://lexica/mylexicon#",
-               "ontolex": "http://www.w3.org/ns/lemon/ontolex#",
-               "lexinfo": "https://www.lexinfo.net/ontology/3.0/lexinfo#",
-               "luc": "http://www.ontotext.com/owlim/lucene#"
+			   "lex": "http://lexica/mylexicon#",
+			   "ontolex": "http://www.w3.org/ns/lemon/ontolex#",
+			   "lexinfo": "https://www.lexinfo.net/ontology/3.0/lexinfo#",
+			   "luc": "http://www.ontotext.com/owlim/lucene#"
 			  });
-	//yasqe.query(yasqe.options);
+    //yasqe.query(yasqe.options);
+    yasqe.collapsePrefixes(true);
 }
 
 function q1_update() {
@@ -161,6 +173,7 @@ function q1_update() {
                "lexinfo": "https://www.lexinfo.net/ontology/3.0/lexinfo#",
                "luc": "http://www.ontotext.com/owlim/lucene#"
               });
+    yasqe.collapsePrefixes(true);
     return value;
 }
 
@@ -193,6 +206,7 @@ function q2_update() {
                "lexinfo": "https://www.lexinfo.net/ontology/3.0/lexinfo#",
                "luc": "http://www.ontotext.com/owlim/lucene#"
               });
+    yasqe.collapsePrefixes(true);
     return pos;
 }
 
@@ -201,18 +215,19 @@ function q3_update() {
     var word = document.getElementById("q3_input").value;
     yasqe.setValue(query.replace("_SEMREL_", semrel).replace("_VALUE_", word));
     yasqe.addPrefixes({"rdf":"http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-               "rabbi":"http://lexo-datasets.ilc.cnr.it:3030/rabbiOntology#",
-               "dct":"http://purl.org/dc/terms/",
-               "owl":"http://www.w3.org/2002/07/owl#",
-               "skos":"http://www.w3.org/2004/02/skos/core#",
-               "rdfs":"http://www.w3.org/2000/01/rdf-schema#",
-               "foaf":"http://xmlns.com/foaf/0.1/",
-               "xsd": "http://www.w3.org/2001/XMLSchema#",
-               "lex": "http://lexica/mylexicon#",
-               "ontolex": "http://www.w3.org/ns/lemon/ontolex#",
-               "lexinfo": "https://www.lexinfo.net/ontology/3.0/lexinfo#",
-               "luc": "http://www.ontotext.com/owlim/lucene#"
-              });
+		       "rabbi":"http://lexo-datasets.ilc.cnr.it:3030/rabbiOntology#",
+		       "dct":"http://purl.org/dc/terms/",
+		       "owl":"http://www.w3.org/2002/07/owl#",
+		       "skos":"http://www.w3.org/2004/02/skos/core#",
+		       "rdfs":"http://www.w3.org/2000/01/rdf-schema#",
+		       "foaf":"http://xmlns.com/foaf/0.1/",
+		       "xsd": "http://www.w3.org/2001/XMLSchema#",
+		       "lex": "http://lexica/mylexicon#",
+		       "ontolex": "http://www.w3.org/ns/lemon/ontolex#",
+		       "lexinfo": "https://www.lexinfo.net/ontology/3.0/lexinfo#",
+		       "luc": "http://www.ontotext.com/owlim/lucene#"
+		      });
+    yasqe.collapsePrefixes(true);
     return [semrel, word];
 }
 
@@ -232,5 +247,6 @@ function q4_update() {
                "lexinfo": "https://www.lexinfo.net/ontology/3.0/lexinfo#",
                "luc": "http://www.ontotext.com/owlim/lucene#"
               });
+    yasqe.collapsePrefixes(true);
     return word;
 }

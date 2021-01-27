@@ -3,7 +3,7 @@
 .vertical-menu {
     width: 90%;
     /*    height: 350px;*/
-    overflow-y: auto;
+    /*overflow-y: auto;*/
 }
 
 .vertical-menu a {
@@ -32,6 +32,18 @@
 .queryTable {
     width: 95%;
     margin:0 auto;
+}
+
+.leftColumn {
+    width:50%;
+    vertical-align: top;
+/*    text-align: left;
+    padding-right:0px;*/
+}
+
+.rightColumn {
+    width: 50%;
+/*    text-align: left; */
 }
 
 
@@ -127,3 +139,4 @@ iframe{
   color: white;
   text-align: center;
 }
+
