@@ -59,7 +59,7 @@ var map = {};
 map["q1"] = "PREFIX ontolex: <http://www.w3.org/ns/lemon/ontolex#>\n" +
 "SELECT DISTINCT ?IRI ?form ?PoS WHERE { \n" +
 "   ?lf ontolex:writtenRep ?form .\n" +
-"   ?IRI ontolex:lexicalForm ?lf ;\n" +
+"   ?IRI ontolex:canonicalForm ?lf ;\n" +
 "       lexinfo:partOfSpeech ?PoS .\n" +
 "   FILTER(REGEX(?form, '_VALUE_'))\n" +
 "}\nLIMIT 1000";
@@ -67,7 +67,7 @@ map["q1"] = "PREFIX ontolex: <http://www.w3.org/ns/lemon/ontolex#>\n" +
 map["q2"] = "PREFIX ontolex: <http://www.w3.org/ns/lemon/ontolex#>\n" +
 "SELECT ?lf ?wr WHERE { \n" +
 "   ?le lexinfo:partOfSpeech ?pos .\n" +
-"   ?le ontolex:lexicalForm ?lf  .\n" +
+"   ?le ontolex:canonicalForm ?lf  .\n" +
 "   ?lf ontolex:writtenRep ?wr .\n" +
 "   FILTER(REGEX(str(?pos), '_POS_'))\n" +
 "}\n"+
@@ -78,7 +78,7 @@ map["q3"] = "PREFIX ontolex: <http://www.w3.org/ns/lemon/ontolex#>\n" +
 "   ?source lexinfo:_SEMREL_+ ?target .\n" +
 "   ?le ontolex:sense ?source .\n" +
 "   ?source skos:definition ?def .\n" +
-"   ?le ontolex:lexicalForm ?lf .\n" +
+"   ?le ontolex:canonicalForm ?lf .\n" +
 "   ?le lexinfo:partOfSpeech ?pos .\n" +
 "   ?lf ontolex:writtenRep \"_VALUE_\" .\n" +
 "}\n" +
@@ -88,7 +88,7 @@ map["q4"] = "PREFIX ontolex: <http://www.w3.org/ns/lemon/ontolex#>\n" +
 "SELECT ?pos ?def ?sense WHERE {\n" +
 "   ?le ontolex:sense ?sense .\n" +
 "   ?sense skos:definition ?def .\n" +
-"   ?le ontolex:lexicalForm ?lf .\n" +
+"   ?le ontolex:canonicalForm ?lf .\n" +
 "   ?le lexinfo:partOfSpeech ?pos .\n" +
 "   ?lf ontolex:writtenRep \"_VALUE_\" .\n" +
 "}\n";
